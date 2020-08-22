@@ -29,7 +29,7 @@ Uses Google Cloud Speect-to-Text API to generate transcripts. You can use Google
 concurrent threads while running docker image. Unless you change program use *8* threads.
 
 ``` bash
-# Generate Docker image
+# Build Docker image
 docker build . -t calganaygun/youtube-transcriber:latest
 
 # Run program and search or generate text
