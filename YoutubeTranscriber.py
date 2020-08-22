@@ -20,7 +20,7 @@ r = sr.Recognizer()
 def getWavFile(id):
     # Run youte-dl to download Youtube video and translate to WAV
     print("Video is downloading...")
-    os.system('youtube-dl -f bestaudio --extract-audio --audio-format wav --audio-quality 3 -o ./temp/{id}.webm https://www.youtube.com/watch?v={id} > /dev/null 2>&1 &'.format(id=id))
+    os.system('youtube-dl -f bestaudio --extract-audio --audio-format wav --audio-quality 3 -o ./temp/{id}.webm https://www.youtube.com/watch?v={id} > /dev/null'.format(id=id))
 
 
 def splitWaw(id):
@@ -31,7 +31,7 @@ def splitWaw(id):
     # Run ffmpeg to split WAV file
     # This command generates 30 second pieces of WAV file
     print("Sound file splitting...")
-    os.system('ffmpeg -i temp/{id}.wav -f segment -segment_time 30 -c copy ./temp/parts-{id}/out%06d.wav > /dev/null 2>&1 &'.format(id=id))
+    os.system('ffmpeg -i temp/{id}.wav -f segment -segment_time 30 -c copy ./temp/parts-{id}/out%06d.wav 2> /dev/null'.format(id=id))
 
 
 def prepareTranscript(id, language):
@@ -64,14 +64,12 @@ def transcribe(data):
         global idofVideo
         idx, file = data
         name = 'temp/parts-'+idofVideo+'/' + file
-        print(name + ' started')
         # Load audio file
         with sr.AudioFile(name) as source:
             audio = r.record(source)
         # Transcribe audio file
         text = r.recognize_google_cloud(
             audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS, language=langOfVideo)
-        print(name + ' done')
         return {
             'idx': idx,
             'text': text
@@ -84,6 +82,7 @@ def transcribe(data):
 
 
 def transcribeFiles(files):
+    print("Sound files is processing on Google Cloud STT API...")
     pool = Pool(numOfThreads)  # Number of concurrent threads
     all_text = pool.map(transcribe, enumerate(files))
     pool.close()
