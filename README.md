@@ -1,14 +1,14 @@
 # YoutubeTranscriber
 A Python script to search strings in YouTube videos.
 
-Uses Google Cloud Speect-to-Text API to generate transcripts. You can use Google Cloud Free Tier credits.
+Uses Google Cloud Speech-to-Text API to generate transcripts. You can use Google Cloud Free Tier credits.
 
 
 ## How to use?
 
 1. Clone this repo.
 2. Sign-in to [GCP](https://console.cloud.google.com/).
-3. Go to [Speect-to-Text API](https://console.cloud.google.com/apis/api/speech.googleapis.com/overview)
+3. Go to [Speech-to-Text API](https://console.cloud.google.com/apis/api/speech.googleapis.com/overview)
    select project and enable this API.
 1. Click "Credentials".
 2. Click "Create Credentials".
