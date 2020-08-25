@@ -132,7 +132,7 @@ def main(argv):
         elif word != '':
             count = 0
             for i in prepareTranscript(videoID, language).split('\n'):
-                if word in i:
+                if word.lower() in i.lower():
                     print(i)
                     count += 1
             print('Transcript searched and {} result(s) found.'.format(count))
